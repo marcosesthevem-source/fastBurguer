@@ -30,6 +30,7 @@ export const MainTabs: React.FC<{ route: any }> = ({ route }) => {
       <Tab.Screen
         name="Home"
         component={HomeScreen}
+        initialParams={{ userName }}
         options={{
           tabBarLabel: 'Início',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🏠</Text>,
