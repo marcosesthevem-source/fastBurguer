@@ -3,13 +3,13 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { theme } from '../theme';
 
 export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+  const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     // Validação estrita para as credenciais de admin
-    if (email === 'admin' && password === 'admin') {
-      navigation.replace('Main');
+    if (user === 'admin' && password === 'admin') {
+      navigation.replace('Main', {userName: user});
     } else {
       Alert.alert('Erro de Acesso', 'E-mail ou senha incorretos. Utilize "admin" para ambos os campos.');
     }
@@ -27,9 +27,8 @@ export const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           style={styles.input}
           placeholder="Digite seu e-mail"
           placeholderTextColor={theme.colors.textSecondary}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
+          value={user}
+          onChangeText={setUser}
           autoCapitalize="none"
         />
 

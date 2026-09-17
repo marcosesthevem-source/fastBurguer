@@ -9,7 +9,9 @@ import { theme } from '../theme';
 
 const Tab = createBottomTabNavigator();
 
-export const MainTabs: React.FC = () => {
+export const MainTabs: React.FC<{ route: any }> = ({ route }) => {
+    const userName = route.params?.userName || 'Cliente';
+
   return (
     <Tab.Navigator
       screenOptions={{

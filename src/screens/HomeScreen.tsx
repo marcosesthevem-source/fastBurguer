@@ -5,14 +5,16 @@ import { ProductCard } from '../components/ProductCard';
 import { CartButton } from '../components/CartButton';
 import { theme } from '../theme';
 
-export const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+export const HomeScreen: React.FC<{ route: any; navigation: any }> = ({ route, navigation }) => {
+  // Pega o nome do usuário passado pela rota
+  const userName = route.params?.userName || 'Cliente';
   const highlights = PRODUCTS.filter((p) => p.isHighlight);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.greeting}>Olá, Cliente 👋</Text>
+          <Text style={styles.greeting}>{`Olá, ${userName} 👋`}</Text>
           <Text style={styles.subGreeting}>O que você quer comer hoje?</Text>
         </View>
         <CartButton onPress={() => navigation.navigate('Cart')} />
