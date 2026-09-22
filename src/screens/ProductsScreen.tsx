@@ -4,7 +4,7 @@ import { PRODUCTS } from '../data/products';
 import { ProductCard } from '../components/ProductCard';
 import { CategoryPill } from '../components/CategoryPill';
 import { CartButton } from '../components/CartButton';
-import { Category } from '../types';
+import { Category, ProductsScreenProps } from '../types';
 import { theme } from '../theme';
 
 const categories: { label: string; value: Category | 'todos' }[] = [
@@ -15,7 +15,7 @@ const categories: { label: string; value: Category | 'todos' }[] = [
   { label: 'Sobremesas', value: 'sobremesas' },
 ];
 
-export const ProductsScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+export const ProductsScreen: React.FC<ProductsScreenProps> = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState<Category | 'todos'>('todos');
 
   const filteredProducts =
@@ -48,6 +48,7 @@ export const ProductsScreen: React.FC<{ navigation: any }> = ({ navigation }) =>
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <ProductCard
             product={item}
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.md,
   },
   title: {
-    fontSize: 24,
+    fontSize: theme.fontSizes.title,
     fontWeight: 'bold',
     color: theme.colors.textPrimary,
   },

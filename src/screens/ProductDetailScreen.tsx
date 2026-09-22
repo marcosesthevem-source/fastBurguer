@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { useCart } from '../context/CartContext';
 import { theme } from '../theme';
+import { ProductDetailScreenProps } from '../types';
+import { CustomButton } from '../components/CustomButton';
+import { CustomHeader } from '../components/CustomHeader';
 
-export const ProductDetailScreen: React.FC<{ route: any; navigation: any }> = ({ route, navigation }) => {
+export const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({ route, navigation }) => {
   const { product } = route.params;
   const { addToCart } = useCart();
 
@@ -14,12 +17,16 @@ export const ProductDetailScreen: React.FC<{ route: any; navigation: any }> = ({
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.backButtonText}>← Voltar</Text>
-        </TouchableOpacity>
+      <CustomHeader showBack onBack={() => navigation.goBack()} />
 
+      <ScrollView contentContainerStyle={styles.content}>
         <Image source={{ uri: product.image }} style={styles.image} resizeMode="cover" />
+
+        <View style={styles.categoryBadge}>
+          <Text style={styles.categoryBadgeText}>
+            {product.category.toUpperCase()}
+          </Text>
+        </View>
 
         <Text style={styles.title}>{product.name}</Text>
         <Text style={styles.description}>{product.description}</Text>
@@ -27,9 +34,11 @@ export const ProductDetailScreen: React.FC<{ route: any; navigation: any }> = ({
       </ScrollView>
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.button} onPress={handleAddToCart} activeOpacity={0.8}>
-          <Text style={styles.buttonText}>Adicionar ao carrinho</Text>
-        </TouchableOpacity>
+        <CustomButton
+          title="Adicionar ao carrinho"
+          onPress={handleAddToCart}
+          style={styles.button}
+        />
       </View>
     </View>
   );
@@ -39,33 +48,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
+    paddingTop: theme.spacing.md,
   },
   content: {
     padding: theme.spacing.md,
-    paddingTop: theme.spacing.xl,
-  },
-  backButton: {
-    marginBottom: theme.spacing.md,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: theme.colors.primary,
-    fontWeight: 'bold',
   },
   image: {
     width: '100%',
-    height: 250,
+    height: 260,
     borderRadius: theme.borderRadius.lg,
-    marginBottom: theme.spacing.lg,
+    marginBottom: theme.spacing.md,
+  },
+  categoryBadge: {
+    alignSelf: 'flex-start',
+    backgroundColor: theme.colors.border,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.xs,
+    borderRadius: theme.borderRadius.sm,
+    marginBottom: theme.spacing.sm,
+  },
+  categoryBadgeText: {
+    fontSize: theme.fontSizes.xs,
+    fontWeight: 'bold',
+    color: theme.colors.textSecondary,
   },
   title: {
-    fontSize: 26,
+    fontSize: theme.fontSizes.hero,
     fontWeight: 'bold',
     color: theme.colors.textPrimary,
     marginBottom: theme.spacing.xs,
   },
   description: {
-    fontSize: 16,
+    fontSize: theme.fontSizes.md,
     color: theme.colors.textSecondary,
     marginBottom: theme.spacing.lg,
     lineHeight: 22,
@@ -82,14 +96,6 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.border,
   },
   button: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.borderRadius.md,
-    padding: theme.spacing.md,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: theme.colors.white,
-    fontSize: 16,
-    fontWeight: 'bold',
+    width: '100%',
   },
 });

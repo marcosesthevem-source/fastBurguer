@@ -1,14 +1,33 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { theme } from '../theme';
+import { SplashScreenProps, UserProfile } from '../types';
 
-export const SplashScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+export const SplashScreen: React.FC<SplashScreenProps> = ({ navigation }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.replace('Auth');
+    let isMounted = true;
+
+    const timer = setTimeout(async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem('@FastBurguer:user');
+        if (storedUser && isMounted) {
+          const parsedUser: UserProfile = JSON.parse(storedUser);
+          navigation.replace('Main', { userName: parsedUser.name || 'Cliente' });
+        } else if (isMounted) {
+          navigation.replace('Auth');
+        }
+      } catch {
+        if (isMounted) {
+          navigation.replace('Auth');
+        }
+      }
     }, 2500);
 
-    return () => clearTimeout(timer);
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    };
   }, [navigation]);
 
   return (
@@ -33,13 +52,14 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.md,
   },
   title: {
-    fontSize: 32,
+    fontSize: theme.fontSizes.hero,
     fontWeight: 'bold',
     color: theme.colors.white,
     marginBottom: theme.spacing.xs,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: theme.fontSizes.md,
     color: theme.colors.background,
+    textAlign: 'center',
   },
 });

@@ -1,23 +1,37 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { theme } from '../theme';
+import { OrderStatusScreenProps } from '../types';
+import { CustomButton } from '../components/CustomButton';
 
-export const OrderStatusScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+export const OrderStatusScreen: React.FC<OrderStatusScreenProps> = ({ route, navigation }) => {
+  const orderId = route.params?.orderId || 'FB-849201';
+
+  const handleBackToHome = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Main' }],
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
         <Text style={styles.checkIcon}>✓</Text>
       </View>
 
-      <Text style={styles.title}>Pedido confirmado!</Text>
-      <Text style={styles.orderNumber}>Nº FB-123456</Text>
+      <Text style={styles.title}>Pedido Confirmado!</Text>
+      <Text style={styles.orderNumber}>{`Nº ${orderId}`}</Text>
 
       <View style={styles.statusTimeline}>
         <View style={styles.statusItem}>
           <View style={[styles.statusDot, styles.dotDone]}>
             <Text style={styles.dotCheck}>✓</Text>
           </View>
-          <Text style={styles.statusTextDone}>Preparando</Text>
+          <View>
+            <Text style={styles.statusTextDone}>Preparando</Text>
+            <Text style={styles.statusSubtext}>Na cozinha preparando com carinho</Text>
+          </View>
         </View>
 
         <View style={styles.lineDone} />
@@ -26,24 +40,28 @@ export const OrderStatusScreen: React.FC<{ navigation: any }> = ({ navigation })
           <View style={[styles.statusDot, styles.dotDone]}>
             <Text style={styles.dotCheck}>✓</Text>
           </View>
-          <Text style={styles.statusTextDone}>A caminho</Text>
+          <View>
+            <Text style={styles.statusTextDone}>A caminho</Text>
+            <Text style={styles.statusSubtext}>Entregador a caminho da sua casa</Text>
+          </View>
         </View>
 
         <View style={styles.linePending} />
 
         <View style={styles.statusItem}>
           <View style={[styles.statusDot, styles.dotPending]} />
-          <Text style={styles.statusTextPending}>Entregue</Text>
+          <View>
+            <Text style={styles.statusTextPending}>Entregue</Text>
+            <Text style={styles.statusSubtext}>Aguardando entrega no seu endereço</Text>
+          </View>
         </View>
       </View>
 
-      <TouchableOpacity
+      <CustomButton
+        title="Voltar ao início"
+        onPress={handleBackToHome}
         style={styles.homeBtn}
-        onPress={() => navigation.navigate('Main')}
-        activeOpacity={0.8}
-      >
-        <Text style={styles.homeBtnText}>Voltar ao início</Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 };
@@ -59,11 +77,16 @@ const styles = StyleSheet.create({
   iconContainer: {
     width: 80,
     height: 80,
-    borderRadius: 20,
+    borderRadius: 40,
     backgroundColor: theme.colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: theme.spacing.md,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
   },
   checkIcon: {
     color: theme.colors.white,
@@ -71,30 +94,42 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   title: {
-    fontSize: 24,
+    fontSize: theme.fontSizes.title,
     fontWeight: 'bold',
     color: theme.colors.textPrimary,
   },
   orderNumber: {
-    fontSize: 16,
+    fontSize: theme.fontSizes.md,
+    fontWeight: '600',
     color: theme.colors.textSecondary,
     marginBottom: theme.spacing.xl,
+    marginTop: theme.spacing.xs,
   },
   statusTimeline: {
-    width: '80%',
-    marginBottom: 40,
+    width: '90%',
+    marginBottom: theme.spacing.xxl,
+    backgroundColor: theme.colors.cardBackground,
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
   },
   statusItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   statusDot: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: theme.spacing.md,
   },
   dotDone: {
     backgroundColor: theme.colors.secondary,
@@ -106,42 +141,38 @@ const styles = StyleSheet.create({
   },
   dotCheck: {
     color: theme.colors.white,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: 'bold',
   },
   statusTextDone: {
-    fontSize: 16,
+    fontSize: theme.fontSizes.md,
     fontWeight: 'bold',
     color: theme.colors.textPrimary,
   },
   statusTextPending: {
-    fontSize: 16,
+    fontSize: theme.fontSizes.md,
+    color: theme.colors.disabled,
+  },
+  statusSubtext: {
+    fontSize: theme.fontSizes.xs,
     color: theme.colors.textSecondary,
+    marginTop: 2,
   },
   lineDone: {
     width: 2,
-    height: 30,
+    height: 28,
     backgroundColor: theme.colors.secondary,
-    marginLeft: 11,
+    marginLeft: 12,
     marginVertical: 2,
   },
   linePending: {
     width: 2,
-    height: 30,
+    height: 28,
     backgroundColor: theme.colors.border,
-    marginLeft: 11,
+    marginLeft: 12,
     marginVertical: 2,
   },
   homeBtn: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.borderRadius.md,
-    padding: theme.spacing.md,
     width: '100%',
-    alignItems: 'center',
-  },
-  homeBtnText: {
-    color: theme.colors.white,
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });

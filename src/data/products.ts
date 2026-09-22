@@ -49,10 +49,19 @@ export const PRODUCTS: Product[] = [
     image: 'https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=500&auto=format&fit=crop',
     isHighlight: false,
   },
+  {
+    id: '6',
+    name: 'Onion Rings Crocantes',
+    description: 'Anéis de cebola empanados e fritos, servidos dourados e sequinhos.',
+    price: 12.90,
+    category: 'acompanhamentos',
+    image: 'https://images.unsplash.com/photo-1639024471287-032f667712d5?q=80&w=500&auto=format&fit=crop',
+    isHighlight: false,
+  },
 
   // Categoria: bebidas
   {
-    id: '6',
+    id: '7',
     name: 'Refrigerante 500ml',
     description: 'Garrafa de refrigerante trincando de gelada (opções no balcão).',
     price: 7.90,
@@ -61,7 +70,7 @@ export const PRODUCTS: Product[] = [
     isHighlight: false,
   },
   {
-    id: '7',
+    id: '8',
     name: 'Milkshake Chocolate',
     description: 'Milkshake cremoso de chocolate com calda especial e chantilly.',
     price: 14.90,
@@ -69,15 +78,33 @@ export const PRODUCTS: Product[] = [
     image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=500&auto=format&fit=crop',
     isHighlight: true,
   },
+  {
+    id: '9',
+    name: 'Suco Natural Laranja 500ml',
+    description: 'Suco 100% natural de laranja espremida na hora, super refrescante.',
+    price: 9.90,
+    category: 'bebidas',
+    image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=500&auto=format&fit=crop',
+    isHighlight: false,
+  },
 
   // Categoria: sobremesas
   {
-    id: '8',
+    id: '10',
     name: 'Sundae Chocolate',
     description: 'Sorvete cremoso de baunilha coberto com calda quente de chocolate.',
     price: 8.90,
     category: 'sobremesas',
     image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=500&auto=format&fit=crop',
     isHighlight: false,
+  },
+  {
+    id: '11',
+    name: 'Tortinha de Maçã',
+    description: 'Massa crocante folhada recheada com maçãs caramelizadas e canela.',
+    price: 7.90,
+    category: 'sobremesas',
+    image: 'https://images.unsplash.com/photo-1535920527002-b35e96722eb9?q=80&w=500&auto=format&fit=crop',
+    isHighlight: true,
   },
 ];

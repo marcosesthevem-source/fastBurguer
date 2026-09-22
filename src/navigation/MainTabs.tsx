@@ -6,11 +6,12 @@ import { HomeScreen } from '../screens/HomeScreen';
 import { ProductsScreen } from '../screens/ProductsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { theme } from '../theme';
+import { MainTabParamList, MainTabsScreenProps } from '../types';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<MainTabParamList>();
 
-export const MainTabs: React.FC<{ route: any }> = ({ route }) => {
-    const userName = route.params?.userName || 'Cliente';
+export const MainTabs: React.FC<MainTabsScreenProps> = ({ route }) => {
+  const userName = route.params?.userName || 'Cliente';
 
   return (
     <Tab.Navigator
